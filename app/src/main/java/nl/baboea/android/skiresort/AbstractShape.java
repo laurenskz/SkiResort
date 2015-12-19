@@ -33,8 +33,9 @@ public class AbstractShape {
     private static final String vPostion = "vertexPosition";
     private static final String texturePosition = "textureCoordinate";
     private Bounds bounds;
-    private int samplerLoc;
-    private Texture texture;
+    private int samplerLoc,samplerLoc2;
+    private Texture texture, texture2;
+    private boolean useVP = true;
 
 
 
@@ -72,6 +73,7 @@ public class AbstractShape {
         //if(textureCoordinateID == -1)drawable = false;
         int vbo[] = new int[1];
         samplerLoc = GLES20.glGetUniformLocation(shaderProgram.getProgramID(), "texture");
+        samplerLoc2 = GLES20.glGetUniformLocation(shaderProgram.getProgramID(), "texture2");
         GLES20.glGenBuffers(1, vbo, 0);
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, vbo[0]);
         GLES20.glBufferData(GLES20.GL_ELEMENT_ARRAY_BUFFER, indexBufferSize * 2, indexData, GLES20.GL_STATIC_DRAW);
@@ -106,8 +108,10 @@ public class AbstractShape {
 
     private void loadMVP(Model model){
         generateModelMatrix(model);
-        modelMatrix.multiply(Camera.getViewMatrix());
-        modelMatrix.multiply(Mat4f.getProjectionMatrix());
+        if(useVP){
+            modelMatrix.multiply(Camera.getViewMatrix());
+            modelMatrix.multiply(Mat4f.getProjectionMatrix());
+        }
         shaderProgram.load("mvpMatrix", modelMatrix);
     }
 
@@ -143,6 +147,16 @@ public class AbstractShape {
         GLES20.glEnable(GLES20.GL_TEXTURE_2D);
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture.getId());
+        if(texture2!=null){
+            GLES20.glUniform1i(samplerLoc2, 1);
+            //GLES20.glEnable(GLES20.GL_TEXTURE_2D);
+            GLES20.glActiveTexture(GLES20.GL_TEXTURE1);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture2.getId());
+        }
+    }
+
+    public void setTexture2(Texture texture2) {
+        this.texture2 = texture2;
     }
 
     private void bindDataToShader(int id, int coordinatesPerVertex, int stride, FloatBuffer vertexData) {
@@ -236,6 +250,10 @@ public class AbstractShape {
             if(other.xMin>xMax)return false;
             return true;
         }
+    }
+
+    public void setUseVP(boolean useVP) {
+        this.useVP = useVP;
     }
 
     public boolean collidesWith(AbstractShape other, Model ownModel, Model otherModel){

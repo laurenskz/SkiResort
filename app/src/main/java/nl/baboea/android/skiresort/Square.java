@@ -41,7 +41,7 @@ public class Square extends AbstractShape {
         model.setPosition(position);
     }
 
-    private static float[] getVertices(float width, float height) {
+    public static float[] getVertices(float width, float height) {
         float[] toReturn = new float[vertices.length];
         for(int i = 0 ; i < vertices.length ; i +=3){
             toReturn[i] = vertices[i]*width;

@@ -17,9 +17,9 @@ public class ShaderProgram {
     private int fragmentID;
     private int programID;
     private HashMap<String,Integer> uniformLocations = new HashMap<>();
+    public static final ShaderProgram multiTextured = new ShaderProgram("shaders/shader.vert", "shaders/basicShader.frag");
     public static final ShaderProgram basicShader = new ShaderProgram("shaders/shader.vert", "shaders/shader.frag");
     public static final ShaderProgram noTexture = new ShaderProgram("shaders/basicShader.vert", "shaders/colorVertex.frag");
-    public static final ShaderProgram noMVP = new ShaderProgram("shaders/noMVPShader.vert", "shaders/colorVertex.frag");
 
     //TODO optimize this shader by caching shader paths with the opengl id
     public ShaderProgram(String vertexPath, String fragmentPath) {

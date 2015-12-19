@@ -20,6 +20,7 @@ public abstract class GameParticipant {
     abstract void update(float secondsPassed);
     protected boolean deletable = false;
     protected boolean playerPassed = false;
+    protected boolean needsCollisionDetection = false;
     protected float passOffset = 0f;
 
     public boolean collidesWith(GameParticipant other){
@@ -40,6 +41,10 @@ public abstract class GameParticipant {
         return dy-getShape().getHeight()/2>(1.3*(1/Constants.RATIO));//Add a little marge just to be safe
     }
 
+    public boolean needsCollisionDetection() {
+        return needsCollisionDetection;
+    }
+
     public float getPassOffset(){
         return passOffset;
     }
@@ -58,7 +63,7 @@ public abstract class GameParticipant {
             passOffset = (1-(percentage/100))*height;
         }else{
             passOffset = -(((percentage-50)/100)*height);
-            Log.d(TAG, "setPassOffSetPercentages passOffset = " + passOffset);
+            //Log.d(TAG, "setPassOffSetPercentages passOffset = " + passOffset);
         }
     }
 
@@ -83,8 +88,14 @@ public abstract class GameParticipant {
         return playerPassed;
     }
 
-    public void onCollisionWithPlayer(Player player){
+    /**
+     *
+     * @param player
+     * @return true if the player should be dead now, else return false
+     */
 
+    public boolean onCollisionWithPlayer(Player player){
+        return false;
     }
 
     @Override

@@ -98,10 +98,10 @@ public class GenerationTileFiller {
             }
             return xValues;
         }
-        Log.d(TAG, "xValuesOnLine y = " + y);
+        //(TAG, "xValuesOnLine y = " + y);
         int i;
         for(i = 0 ; i < safePoints.size();i++){
-            Log.d(TAG, "xValuesOnLine safePoints["+i+"]"+"="+safePoints.get(i));
+            //Log.d(TAG, "xValuesOnLine safePoints["+i+"]"+"="+safePoints.get(i));
             if(safePoints.get(i).getY()<=y&&safePoints.get(i+1).getY()>=y)break;//We have found a winner
         }
         return new float[]{xValueOfLineOn(y-safePoints.get(i).getY(),safePoints.get(i),safePoints.get(i+1))};

@@ -15,6 +15,7 @@ public class Tree extends MultiTextured{
     public Tree(){
         super(TEXTURES,true);
         setPassOffSetPercentages(85f);
+        needsCollisionDetection = true;
     }
 
     @Override
@@ -34,9 +35,9 @@ public class Tree extends MultiTextured{
     }
 
     @Override
-    public void onCollisionWithPlayer(Player player) {
-        if(playerPassed)return;
-        this.deletable = true;
+    public boolean onCollisionWithPlayer(Player player) {
+        if(playerPassed)return false;
+        return true;
     }
 
     public static Spawner getSpawner(){

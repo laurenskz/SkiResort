@@ -35,8 +35,8 @@ public class Background implements ParticipantContainer {
         neededTilesX+=2;
         Log.d(TAG, "Background tiles x = " + neededTilesX + " tiles y = " + neededTilesY);
         tiles = new SnowTile[neededTilesY][neededTilesX];
-        float toMiddleX = tileHeight/2;
-        float toMiddleY = tileWidth/2;
+        float toMiddleX = tileWidth/2;
+        float toMiddleY = tileHeight/2;
         tiles[0][0] = tile;//Store the first tile
         xLeft = -1+toMiddleX - (tileWidth/2);
         tiles[0][0].getModel().getPosition().setX(-1+toMiddleX);

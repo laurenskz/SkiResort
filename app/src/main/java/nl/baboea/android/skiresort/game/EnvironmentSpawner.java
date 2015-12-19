@@ -1,4 +1,4 @@
-package nl.baboea.android.skiresort.game;
+            package nl.baboea.android.skiresort.game;
 
 import android.util.Log;
 
@@ -107,7 +107,8 @@ public class EnvironmentSpawner implements ParticipantContainer{
 
     @Override
     public ArrayList<GameParticipant> getAll() {
-        return generateAtCameraPosition(Camera.getPosition());
+        pointsAtGenerated.add(worldPointToGrid(Camera.getPosition()));//Player can have 1 free point
+        return new ArrayList<GameParticipant>();//Just return an empty list and add the positions to the array.
     }
 
     @Override

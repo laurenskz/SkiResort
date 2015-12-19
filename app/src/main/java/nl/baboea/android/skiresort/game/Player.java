@@ -1,6 +1,7 @@
 package nl.baboea.android.skiresort.game;
 
 import android.opengl.GLES20;
+import android.util.Log;
 
 import nl.baboea.android.skiresort.Constants;
 import nl.baboea.android.skiresort.Input;
@@ -17,19 +18,23 @@ public class Player extends MultiTextured {
 
     private static final float SCALE = 0.35f;
     public static final int[] TEXTURES = new int[]{R.drawable.santa_straight, R.drawable.santa_left, R.drawable.santa_right};
-    private static final int MOVE_DISTANCE = 1;
+    public static final float START_SPEED = 2f;
+
     private enum Direction {STRAIGHT, LEFT, RIGHT};
     private Model model;
     private float speed;
+    private boolean crashed = false;
+    private Vec3 lastPosition;
 
 
     public Player(){
         super(TEXTURES);
-        speed = 2f;
+        speed = START_SPEED;
         model = new Model();
         model.setScale(new Vec3(SCALE,SCALE,SCALE));
         selected = Direction.STRAIGHT;
         model.getPosition().setZ(-0.05f);
+        model.getPosition().setY(1);//Start a little above zero.
     }
 
 
@@ -42,6 +47,7 @@ public class Player extends MultiTextured {
 
     @Override
     public void update(float secondsPassed) {
+        if(crashed)return;
         if(!Input.pressed){
             selected = Direction.STRAIGHT;
         }else{
@@ -51,6 +57,30 @@ public class Player extends MultiTextured {
             if(Input.lastX<halfWidth)selected = Direction.LEFT;
         }
         basicMove(secondsPassed);
+    }
+
+    public int crash(){
+        crashed = true;
+        return getScore();
+    }
+
+    public boolean hasCrashed() {
+        return crashed;
+    }
+
+    public int getScore(){
+        if(getModel().getPosition()!=lastPosition){
+            Log.d(TAG, "getScore last position has changed?");
+        }
+        lastPosition = getModel().getPosition();
+        int toRet = (int) -(getModel().getPosition().getY());
+        return toRet;
+    }
+    public int getScore(boolean log){
+        int toRet = (int) -(getModel().getPosition().getY());
+//        Log.d(TAG, "getScore " + getModel().getPosition());
+//        Log.d(TAG, "getScore " + toRet);
+        return toRet;
     }
 
     private void basicMove(float secondsPassed){

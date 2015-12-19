@@ -44,4 +44,26 @@ public class Utils {
         return ret;
     }
 
+    private static final float[] vertices = new float[]{
+            -1f, 1f, 0,
+            -1f, -1f, 0,
+            1f, -1f, 0,
+            1f, 1f, 0
+    };
+
+    public static float[] getVertices(float width, float height) {
+        float[] toReturn = new float[vertices.length];
+        for(int i = 0 ; i < vertices.length ; i +=3){
+            toReturn[i] = vertices[i]*width;
+            toReturn[i+1] = vertices[i+1]*height;
+            toReturn[i+2] = vertices[i+2];
+        }
+        return toReturn;
+    }
+
+    public static  short[] indices = new short[]{
+            0, 1, 2,
+            0, 2, 3
+    };
+
 }

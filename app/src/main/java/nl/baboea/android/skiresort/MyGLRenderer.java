@@ -1,5 +1,6 @@
 package nl.baboea.android.skiresort;
 
+import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 
@@ -19,6 +20,11 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private Game game;
     private TexturedSquare b;
     private long time;
+    private Context context;
+
+    public MyGLRenderer(Context context){
+        this.context = context;
+    }
 
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
         // Set the background frame color
@@ -28,7 +34,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         GLES20.glEnable(GLES20.GL_BLEND);
         GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA,GLES20.GL_ONE_MINUS_SRC_ALPHA);
         time = System.currentTimeMillis();
-        game = new Game();
+        game = new Game(context);
     }
 
     public void onDrawFrame(GL10 unused) {
