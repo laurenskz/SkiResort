@@ -40,7 +40,7 @@ public class ShaderProgram {
         // add the source code to the shader and compile it
         GLES20.glShaderSource(shader, shaderCode);
         GLES20.glCompileShader(shader);
-        Log.d("ShaderProgram",toCompile + ": " + GLES20.glGetShaderInfoLog(shader));
+        //Log.d("ShaderProgram",toCompile + ": " + GLES20.glGetShaderInfoLog(shader));
         return shader;
     }
 

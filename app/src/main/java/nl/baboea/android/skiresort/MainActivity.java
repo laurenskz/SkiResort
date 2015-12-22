@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private GLSurfaceView mGLView;
+    private MyGLSurfaceView mGLView;
     public static AssetManager assetManager;
     public static Resources resources;
 
@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mGLView = new MyGLSurfaceView(this);
-        Log.d("Main", "Width = " + Constants.WIDTH + " Height = " + Constants.HEIGHT);
+        //Log.d("Main", "Width = " + Constants.WIDTH + " Height = " + Constants.HEIGHT);
         setContentView(mGLView);
         assetManager = getAssets();
         resources = getResources();
@@ -32,6 +32,12 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mGLView.onStart();
     }
 
     @Override

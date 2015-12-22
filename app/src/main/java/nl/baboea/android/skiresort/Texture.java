@@ -31,7 +31,7 @@ public class Texture {
     protected float[] getVertices() {
         float width = (float)this.width / DENOMINATOR;
         float height = (float)this.height / DENOMINATOR;
-        Log.d("Texture","Width = " + width + "; Height = " + height);
+        //Log.d("Texture","Width = " + width + "; Height = " + height);
         float[] toReturn = new float[vertices.length];
         for(int i = 0 ; i < vertices.length ; i +=3){
             toReturn[i] = vertices[i]*width;
@@ -49,7 +49,7 @@ public class Texture {
         try {
             this.id = loadTexture(MainActivity.resources.openRawResource(id),collisionMapId);
         } catch (Exception e) {
-            Log.d("Texture", e.toString());
+            //Log.d("Texture", e.toString());
         }
     }
 

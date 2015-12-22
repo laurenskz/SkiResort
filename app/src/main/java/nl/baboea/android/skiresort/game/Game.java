@@ -1,8 +1,10 @@
 package nl.baboea.android.skiresort.game;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,8 +24,8 @@ import nl.baboea.android.skiresort.nl.baboea.android.skiresort.math.Vec3;
  */
 public class Game {
 
-    public static final String HIGHSCORE_PREFIX = "Highscore:";
-    private Context context;
+    public static final String HIGHSCORE_PREFIX = "Highscore : ";
+    private Activity context;
     public static final String TAG = "Game";
     private ArrayList<GameParticipant> participants = new ArrayList<>();
     private ArrayList<ParticipantContainer> containers = new ArrayList<>();
@@ -36,7 +38,7 @@ public class Game {
     private Text highScoreText = new Text("");
     private boolean released = false;//This is for at the end of a game, a player has to release the screen and then tap it again.
 
-    public Game(Context context) {
+    public Game(Activity context) {
         this.context = context;
         initializeGame();
         Model neutral = new Model();
@@ -80,9 +82,19 @@ public class Game {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt("highScore", newScore);
         editor.commit();
+        toast("New highscore!", Toast.LENGTH_SHORT);
         return newScore;
     }
 
+
+    private void toast(final String message, final int length){
+        context.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(context, message, length).show();
+            }
+        });
+    }
     private void clearGame(){
         participants.clear();
         containers.clear();
@@ -100,7 +112,7 @@ public class Game {
             if(participant.isInView()){
                 participant.draw();
                 if(bounds.get(participant.getClass())==null)continue;
-                bounds.get(participant.getClass()).draw(participant.getModel());
+                //bounds.get(participant.getClass()).draw(participant.getModel());//Turn this on to draw the bounds
             }
         }
         scoreText.draw();

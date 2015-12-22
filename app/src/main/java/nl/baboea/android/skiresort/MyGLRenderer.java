@@ -1,8 +1,10 @@
 package nl.baboea.android.skiresort;
 
+import android.app.Activity;
 import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
+import android.util.Log;
 
 import javax.microedition.khronos.egl.EGLConfig;
 
@@ -16,19 +18,22 @@ import nl.baboea.android.skiresort.nl.baboea.android.skiresort.math.Vec3;
  */
 public class MyGLRenderer implements GLSurfaceView.Renderer {
 
+    public static final String TAG = "MyGLRenderer";
     private float zRot;
     private Game game;
     private TexturedSquare b;
     private long time;
-    private Context context;
+    private Activity context;
 
-    public MyGLRenderer(Context context){
+    public MyGLRenderer(Activity context){
         this.context = context;
     }
 
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
         // Set the background frame color
-        GLES20.glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
+        GLES20.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);//Make a white background
+        new Text("Loading the game").draw();
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
         GLES20.glDepthFunc(GLES20.GL_LEQUAL);
         GLES20.glEnable(GLES20.GL_BLEND);
@@ -48,6 +53,12 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         }
 
         time = newTime;
+    }
+
+
+    public void onStart(){
+        //Log.d(TAG, "onStart of renderer called");
+        time = System.currentTimeMillis();
     }
 
     public void onSurfaceChanged(GL10 unused, int width, int height) {

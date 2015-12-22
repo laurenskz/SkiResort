@@ -24,7 +24,6 @@ public class Player extends MultiTextured {
     private Model model;
     private float speed;
     private boolean crashed = false;
-    private Vec3 lastPosition;
 
 
     public Player(){
@@ -69,10 +68,6 @@ public class Player extends MultiTextured {
     }
 
     public int getScore(){
-        if(getModel().getPosition()!=lastPosition){
-            Log.d(TAG, "getScore last position has changed?");
-        }
-        lastPosition = getModel().getPosition();
         int toRet = (int) -(getModel().getPosition().getY());
         return toRet;
     }

@@ -1,5 +1,6 @@
 package nl.baboea.android.skiresort;
 
+import android.app.Activity;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
@@ -16,7 +17,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
     private boolean done;
     private final MyGLRenderer mRenderer;
 
-    public MyGLSurfaceView(Context context){
+    public MyGLSurfaceView(Activity context){
         super(context);
         // Create an OpenGL ES 2.0 context
         setEGLContextClientVersion(2);
@@ -26,10 +27,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
+
 
     @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
@@ -38,6 +36,10 @@ public class MyGLSurfaceView extends GLSurfaceView {
         Constants.WIDTH = getWidth();
         Constants.RATIO = (float)getWidth()/getHeight();
         Mat4f.loadUpProjectionMatrix();
+    }
+
+    public void onStart(){
+        mRenderer.onStart();
     }
 
     @Override

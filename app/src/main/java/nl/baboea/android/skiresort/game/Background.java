@@ -38,20 +38,20 @@ public class Background implements ParticipantContainer {
         float toMiddleX = tileWidth/2;
         float toMiddleY = tileHeight/2;
         tiles[0][0] = tile;//Store the first tile
-        xLeft = -1+toMiddleX - (tileWidth/2);
+        xLeft = -1;
         tiles[0][0].getModel().getPosition().setX(-1+toMiddleX);
         tiles[0][0].getModel().getPosition().setY(-1 +toMiddleY);
         for(int y = 0 ; y < tiles.length ; y++){
             for(int x = 0 ; x < tiles[y].length ; x++){
                 if(x==0&&y==0)continue;
                 tiles[y][x] = new SnowTile();
-                float xPos = -1+x*tileHeight+toMiddleX;
-                float yPos = -1+y*tileWidth+toMiddleY;
+                float xPos = -1+x*tileWidth+toMiddleX;
+                float yPos = -1+y*tileHeight+toMiddleY;
                 tiles[y][x].getModel().getPosition().setX(xPos);
                 tiles[y][x].getModel().getPosition().setY(yPos);
             }
         }
-        xRight = -1+(tiles[0].length-1)*tileHeight+toMiddleX+(tileWidth/2);
+        xRight = -1+(tiles[0].length)*tileWidth;
         highestRow = tiles[tiles.length-1];
 
     }
@@ -78,19 +78,20 @@ public class Background implements ParticipantContainer {
         float spaceToRight = xRight - cameraPosition.getX();
         if(spaceToLeft>=1&&spaceToRight>=1)return;//Everything is fine, the map does not exceed the boundaries.
         if(spaceToLeft<1){
-            moveRowsX(false,xRight-tileWidth+(tileWidth/10),-(tiles.length-1)*tileWidth);//Left is false because we want to move the right rows
+            moveRowsX(false,xRight-(tileWidth/10)-(tileWidth/2),-(tiles[0].length)*tileWidth);//Left is false because we want to move the right rows
             xLeft-=tileWidth;
             xRight-=tileWidth;
             return;//We moved the rows and now we're done!
         }
-        moveRowsX(true,xLeft+tileWidth-(tileWidth/10),(tiles.length-1)*tileWidth);
+        moveRowsX(true,xLeft+(tileWidth/10)+(tileWidth/2),(tiles[0].length)*tileWidth);
         xLeft+=tileWidth;
         xRight+=tileWidth;
     }
 
     private void moveRowsX(boolean left, float toPass, float toIncrement){
+        //Log.d(TAG, "moveRowsX ");
         for(SnowTile[] tileRow : tiles){
-            for(SnowTile tile : tileRow){
+            for(SnowTile tile : tileRow){//Go through all the snow tiles
                 if(left){
                     if(tile.getModel().getPosition().getX()<toPass)
                         tile.getModel().getPosition().incrementX(toIncrement);
