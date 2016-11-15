@@ -41,7 +41,7 @@ public class Text {
 
         HashMap<Character, AbstractShape> toRet = new HashMap<>();
         Texture t = new Texture(R.drawable.font);
-        Texture secondTexture = new Texture(R.drawable.blue_font);
+        Texture secondTexture = new Texture(R.drawable.red_font);
         float widthPerLetter = 1f/FONT_WIDTH;
         float heightPerLetter = 1f/FONT_HEIGHT;
         int i = 0;
@@ -100,5 +100,10 @@ public class Text {
             }
         }
         model.setPosition(start);
+    }
+
+    @Override
+    public String toString() {
+        return text;
     }
 }

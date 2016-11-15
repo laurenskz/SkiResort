@@ -17,6 +17,7 @@ import nl.baboea.android.skiresort.Input;
 import nl.baboea.android.skiresort.Model;
 import nl.baboea.android.skiresort.Square;
 import nl.baboea.android.skiresort.Text;
+import nl.baboea.android.skiresort.game.model.SharedGameModel;
 import nl.baboea.android.skiresort.nl.baboea.android.skiresort.math.Vec3;
 
 /**
@@ -60,7 +61,7 @@ public class Game {
         emptyContainers();//Background should be added first for smooth blending of pixels (because player is the top no other textures will pas the depth test and if player has transparent pixels clear color will be visible)
         participants.add(player);
         scoreText = new Text("0");
-        scoreText.getModel().setPosition(new Vec3(-1f, 1f, -1f));
+        scoreText.getModel().setPosition(new Vec3(-0.9f, 1f, -1f));
         released = false;
     }
 
@@ -152,6 +153,7 @@ public class Game {
         }
         int score = player.getScore();
         scoreText.setText(String.valueOf(score));
+        SharedGameModel.getInstance().draw();
         Camera.update();//This always has to be done because we want to keep an eye at the player
     }
 

@@ -16,5 +16,6 @@ public class Constants {
      */
 
     public static float TREE_RATIO = 25f;
+    public static float PRESENT_RATIO = 3f;
 
 }

@@ -83,6 +83,13 @@ public class Vec3 {
     }
 
 
+    public void scale(float scale) {
+        x *= scale;
+        y *= scale;
+        z *= scale;
+    }
+
+
     @Override
     public String toString() {
         return "[Vec3 x = " + x + ", y = " + y + ", z = " +z +"]";

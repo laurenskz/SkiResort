@@ -166,7 +166,9 @@ public class GenerationTileFiller {
         for(Spawner spawner : spawners){
             start += spawner.getRatio();
             if(diceRoll<=start){
-                return spawner.getInstance();
+                GameParticipant instance = spawner.getInstance();
+                instance.getModel().getScale().scale((float)randDouble(0.7,1.3));
+                return instance;
             }
         }
         if(spawners.size()>=1){//Why not
@@ -182,6 +184,8 @@ public class GenerationTileFiller {
 
     private void populateSpawners(){
         spawners.add(Tree.getSpawner());//Add the trees
+        spawners.add(Present.getSpawner());//Add the presents
+        spawners.add(new ObstacleSpawner());
         setSpawnerTotal();
     }
 
